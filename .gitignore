@@ -2,3 +2,10 @@ src/
 cnt/
 # artifact cache
 bin/
+
+#ides
+.vscode/
+
+#git 
+!.gitkeep
+!.gitignore

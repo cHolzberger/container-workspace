@@ -1,8 +1,0 @@
-secret/data/wgX/clients/clX
-secret/data/wgX/server/srvX
-secret/data/wgX/config
-secret/data/wgX/client_count
-
-metadata
-srv.metdata.config=["wgX"]
-srvX = srv.id

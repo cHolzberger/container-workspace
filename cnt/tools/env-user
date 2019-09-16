@@ -1,5 +1,0 @@
-GIT_USERNAME="C. Holzberger"
-GIT_EMAIL="ch@mosaiksoftware.de"
-GIT_BRANCH=v0.1
-COMPOSER_MEMORY_LIMIT=-1
-DATABASE_URL="mysql://moon"

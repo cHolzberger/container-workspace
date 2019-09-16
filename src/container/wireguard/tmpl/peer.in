@@ -1,3 +1,0 @@
-[Peer]
-PublicKey = ${wg_public_key}
-AllowedIPs = 10.99.97.{{$.Profile.Number}}/32,fd00::10:97:{{$.Profile.Number}}/128
