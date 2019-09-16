@@ -1,0 +1,55 @@
+#!/bin/sh -e
+
+function create_user() { 
+echo "Creating Users"
+
+addgroup -g $T_GID dev
+adduser -g "Developer" -h /workspace -G developer  -u $T_UID -G dev -D -H dev
+chown dev:dev /workspace
+
+} 
+
+function config_sshd() {
+	echo "Configure SSHD"
+
+	su - dev <<END 
+	if [[ ! -e /workspace/.ssh/ssh_host_rsa_key ]]; then
+		ssh-keygen -f /workspace/.ssh/ssh_host_rsa_key -N '' -t rsa
+		ssh-keygen -f /workspace/.ssh/ssh_host_dsa_key -N '' -t dsa
+	fi
+	nohup /usr/bin/sshd -oStrictModes=No -oAuthenticationMethods=publickey -h /workspace/.ssh/ssh_host_rsa_key -h /workspace/.ssh/ssh_host_dsa_key -p 2323 -E /workspace/logs/sshd.log &
+END
+}
+
+function create_logs() {
+
+	su - dev <<END
+	
+	echo "Create logs folder"
+	if [[ ! -d /workspace/logs ]]; then
+		mkdir /workspace/logs
+	fi
+END
+}
+
+function spawn_shell() {
+	echo "Spaswning ${@}" 
+
+	env=$( cat /workspace/tools/env-user )
+
+	exec su - dev <<END
+	set -o allexport
+	
+	$env
+	${@}
+END
+}
+
+create_user
+create_logs
+
+if [[ -e /usr/bin/sshd ]]; then
+	config_sshd
+fi
+
+spawn_shell "${@}"

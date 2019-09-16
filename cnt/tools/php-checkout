@@ -1,0 +1,13 @@
+BRANCH=${GIT_BRANCH:-master}
+cd app 
+git branch $BRANCH
+cd ..
+cd plugin 
+git branch $BRANCH
+cd ..
+
+git clone -b $BRANCH -- app src
+git clone -b $BRANCH -- plugin src/var/plugins/HttpRemoteAuthBundle
+
+cd src 
+composer install

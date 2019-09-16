@@ -1,0 +1,9 @@
+[Interface]
+PrivateKey = ${wg_private_key}
+DNS = 10.99.97.1, fd00::10:97:1
+Address = 10.99.97.{{$.Profile.Number}}/22,fd00::10:97:{{$.Profile.Number}}/112
+
+[Peer]
+PublicKey = $(cat server.public)
+Endpoint = {{$.Domain}}:51820
+AllowedIPs = 0.0.0.0/0, ::/0

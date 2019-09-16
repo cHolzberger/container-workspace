@@ -1,0 +1,13 @@
+#!/bin/bash
+
+cd /workspace/src
+
+composer install --dev --optimize-autoloader
+composer require --dev symfony/web-server-bundle
+
+bin/console doctrine:schema:drop --env=dev --force
+
+bin/console doctrine:database:create  --env=dev
+bin/console doctrine:schema:create --env=dev
+
+bin/console kimai:create-user username admin@example.com ROLE_SUPER_ADMIN admin

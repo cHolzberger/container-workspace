@@ -1,0 +1,10 @@
+projects:
+  Docker-Library:
+    3rdparty/greenfield.bst:
+    - ref: 6593ba126b11f97bdb7a3a2deb4dc37f7cf053b9
+    3rdparty/go-rest-wol.bst:
+    - ref: b30e6c4ff5c0337a3c371e7561ff7b0e3c592ca1
+    3rdparty/rest-server.bst:
+    - ref: a87d968870b4dec64abfe1270e538fdc01524a81
+    3rdparty/ping-exporter.bst:
+    - ref: f7516b4738226f98cadb8502fb9f956934aa891a

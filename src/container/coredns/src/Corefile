@@ -1,0 +1,7 @@
+. {
+    log
+    health :8001
+    ready :8000
+    reload
+}
+

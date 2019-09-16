@@ -1,0 +1,14 @@
+format-version: 3
+workspaces:
+  3rdparty/go-rest-wol.bst:
+    path: /home/cholzberger/Workspaces/Docker-Library/src/3rdparty/go-rest-wol
+    prepared: false
+    running_files: {}
+  3rdparty/greenfield.bst:
+    path: /home/cholzberger/Workspaces/Docker-Library/src/3rdparty/greenfield
+    prepared: false
+    running_files: {}
+  3rdparty/ping-exporter.bst:
+    path: /home/cholzberger/Workspaces/Docker-Library/src/3rdparty/ping-exporter
+    prepared: false
+    running_files: {}

@@ -1,0 +1,65 @@
+volumes:
+  workspace:
+
+x-vol: &vols
+  - "workspace:/workspace"
+  - "./src:/workspace/src"
+  - "./cnt/tools:/workspace/tools"
+  - "./cnt/sshd:/workspace/.ssh"
+  - "./cnt/vscode-server:/workspace/.vscode-server"
+  - "./cnt/vscode-server-insiders:/workspace/.vscode-server-insiders"
+
+services:
+  proxy:
+    hostname: proxy
+    image: mitmproxy/mitmproxy
+    command: "mitmweb --mode reverse:http://srv:80 --set web_debug=true --set web_iface='' --set keep_host_header=true"
+    ports: [ "3000:8080", "3001:8081" ]
+    rm: true
+ 
+  mail:
+    image: djfarrelly/maildev
+    ports: [ "3025:25", "3002:80" ]
+    hostname: mail
+    command: ["--web", "80", "--smtp", "25", "--ip","0.0.0.0"]
+    rm: true
+
+  workspace:
+    hostname: workspace
+    image: "hub.ad.mosaiksoftware.de/mosaiksoftware/clearlinux-devbase"
+    rm: true
+    interactive: true
+    tty: true
+    share-ssh-socket: true
+    ports: [ "2323:2323" ]
+    env-file: [tools/env]
+    volume: *vols
+
+  srv:
+    hostname: srv
+    image: "mosaiksoftware/alpine-swoole-srv"
+    rm: true
+    interactive: false
+    tty: false
+    env-file: [tools/env]
+    entrypoint: /workspace/tools/init
+    volume: *vols
+    requires: [mail, proxy]
+
+  ide-coder:
+    hostname: ide-coder
+    image: "codercom/code-server"
+    cmd: --allow-http --no-auth
+    volumes: *vols
+    ports: [8443:8443]
+    requires: [srv]
+groups:
+  "ide-coder": ["ide-coder", "srv", "workspace", "mail", "proxy"]
+  "ide": ["workspace"]
+commands:
+  composer: run srv 'cd /workspace/uvdesk && composer create-project uvdesk/community-skeleton /workspace/app/ --stability dev'
+  setup: run srv php bin/console uvdesk:configure-helpdesk
+accelerated-mounts:
+  dev:
+    uid: 1000
+    gid: 1000
