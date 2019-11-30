@@ -1,11 +1,17 @@
-src/
-cnt/
-# artifact cache
-bin/
+# Ignore everything
 
-#ides
-.vscode/
+*
 
-#git 
-!.gitkeep
+# But not these files...
 !.gitignore
+!README.*
+!README
+!IDEAS.*
+!doc/*
+!.yml
+!.yaml
+!.cue
+!.dhall
+!repos.yaml
+!\.tool/setup
+!\.tool/envp
