@@ -1,7 +1,8 @@
 repositories:
-  Docker-Library:
+  container:
     type: git
     version: master
+    url: git@github.com:cHolzberger/container-workspace.git
   hosting:
     type: git
     version: master
